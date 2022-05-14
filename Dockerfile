@@ -6,7 +6,7 @@ COPY package*.json ./
 # RUN npm config set unsafe-perm true
 # RUN npm install -g typescript
 # RUN npm install -g ts-node
-RUN yarn install
+RUN yarn install --network-timeout 1000000000
 COPY --chown=node:node . .
 RUN yarn run build
 
@@ -16,7 +16,7 @@ RUN apk add git && mkdir -p /home/node/app/node_modules && chown -R node:node /h
 WORKDIR /home/node/app
 COPY package*.json ./
 # RUN npm install --save-dev sequelize-cli
-RUN yarn install --production
+RUN yarn install --production --network-timeout 1000000000
 
 USER node
 COPY --from=builder /home/node/app/dist ./dist
