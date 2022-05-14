@@ -21,7 +21,7 @@
     "@notionhq/client": "^1.0.4",
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.0.1",
+    "@oclif/plugin-plugins": "^2.1.0",
     "got": "11.8.3",
     "jsdom": "^19.0.0",
     "jsonld": "https://github.com/bcaldwell/jsonld.js",
