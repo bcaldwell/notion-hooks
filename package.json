@@ -1,0 +1,82 @@
+{
+  "name": "notion-hooks",
+  "version": "0.0.1",
+  "description": "cli for running various notion scripts/webhooks",
+  "author": "Benjamin Caldwell @bcaldwell",
+  "bin": {
+    "notion-hooks": "./bin/run"
+  },
+  "homepage": "https://github.com/bcaldwell/notion-hooks",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "bcaldwell/notion-hooks",
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "dependencies": {
+    "@cucumber/microdata": "^2.0.0",
+    "@notionhq/client": "^1.0.4",
+    "@oclif/core": "^1",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.0.1",
+    "got": "11.8.3",
+    "jsdom": "^19.0.0",
+    "jsonld": "https://github.com/bcaldwell/jsonld.js",
+    "schema-dts": "^1.1.0"
+  },
+  "devDependencies": {
+    "@oclif/test": "^2",
+    "@types/chai": "^4",
+    "@types/jsdom": "^16.2.14",
+    "@types/jsonld": "^1.5.6",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.9.4",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.2",
+    "globby": "^11",
+    "mocha": "^9",
+    "oclif": "^3",
+    "shx": "^0.3.3",
+    "ts-node": "^10.2.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "oclif": {
+    "bin": "notion-hooks",
+    "dirname": "notion-hooks",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "scripts": {
+    "watch": "tsc -b -w",
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "prepack": "yarn build && oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "bugs": "https://github.com/bcaldwell/notion-hooks/issues",
+  "keywords": [
+    "oclif"
+  ],
+  "types": "dist/index.d.ts"
+}
