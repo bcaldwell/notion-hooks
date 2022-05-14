@@ -20,7 +20,7 @@ $ npm install -g notion-hooks
 $ notion-hooks COMMAND
 running command...
 $ notion-hooks (--version)
-notion-hooks/0.0.0 linux-x64 node-v16.14.2
+notion-hooks/0.0.1 linux-x64 node-v16.14.2
 $ notion-hooks --help [COMMAND]
 USAGE
   $ notion-hooks COMMAND
@@ -29,8 +29,6 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`notion-hooks hello PERSON`](#notion-hooks-hello-person)
-* [`notion-hooks hello world`](#notion-hooks-hello-world)
 * [`notion-hooks help [COMMAND]`](#notion-hooks-help-command)
 * [`notion-hooks plugins`](#notion-hooks-plugins)
 * [`notion-hooks plugins:install PLUGIN...`](#notion-hooks-pluginsinstall-plugin)
@@ -41,46 +39,7 @@ USAGE
 * [`notion-hooks plugins:uninstall PLUGIN...`](#notion-hooks-pluginsuninstall-plugin-1)
 * [`notion-hooks plugins:uninstall PLUGIN...`](#notion-hooks-pluginsuninstall-plugin-2)
 * [`notion-hooks plugins update`](#notion-hooks-plugins-update)
-
-## `notion-hooks hello PERSON`
-
-Say hello
-
-```
-USAGE
-  $ notion-hooks hello [PERSON] -f <value>
-
-ARGUMENTS
-  PERSON  Person to say hello to
-
-FLAGS
-  -f, --from=<value>  (required) Whom is saying hello
-
-DESCRIPTION
-  Say hello
-
-EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
-```
-
-_See code: [dist/commands/hello/index.ts](https://github.com/bcaldwell/notion-hooks/blob/v0.0.0/dist/commands/hello/index.ts)_
-
-## `notion-hooks hello world`
-
-Say hello world
-
-```
-USAGE
-  $ notion-hooks hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ oex hello world
-  hello world! (./src/commands/hello/world.ts)
-```
+* [`notion-hooks recipe-db-import`](#notion-hooks-recipe-db-import)
 
 ## `notion-hooks help [COMMAND]`
 
@@ -331,4 +290,24 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
+## `notion-hooks recipe-db-import`
+
+imports recipe from a website to a notion db
+
+```
+USAGE
+  $ notion-hooks recipe-db-import --url <value>
+
+FLAGS
+  --url=<value>  (required) url path to recipe
+
+DESCRIPTION
+  imports recipe from a website to a notion db
+
+EXAMPLES
+  $ notion-hooks recipe-db-import
+```
+
+_See code: [dist/commands/recipe-db-import.ts](https://github.com/bcaldwell/notion-hooks/blob/v0.0.1/dist/commands/recipe-db-import.ts)_
 <!-- commandsstop -->

@@ -1,5 +1,5 @@
 import got from 'got';
-import { parse, HTMLElement } from 'node-html-parser';
+// import { parse, HTMLElement } from 'node-html-parser';
 import jsonld from 'jsonld';
 
 import { Recipe } from "./types"
@@ -28,7 +28,7 @@ const recipeContext = {
 
 export async function parseRecipeFromURL(url: string): Promise<Recipe | null> {
     const siteHTML = await got.get(url).text();
-    const parsedHTML = parse(siteHTML)
+    // const parsedHTML = parse(siteHTML)
     const dom = new JSDOM(siteHTML)
 
     // check error...
