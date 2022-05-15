@@ -1,10 +1,11 @@
 import { Notion } from "../notion/notion"
 import { Recipe } from "./types"
 
-export function createNotionPageForRecipe(recipe: Recipe) {
-    const client = new Notion("997a1c1a3e3341e792a9dff6252c93a9");
+export function createNotionPageForRecipe(recipe: Recipe, notionDBID: string) {
+    // "997a1c1a3e3341e792a9dff6252c93a9"
+    const client = new Notion(notionDBID);
 
-    client.getOrCreateDatabasePage(Notion.filterOnProperty("URL", recipe.url), () => {
+    client.getOrCreateDatabasePage(Notion.filterOnProperty("URL", recipe.url), async () => {
         return {
             parent: {
                 database_id: ""

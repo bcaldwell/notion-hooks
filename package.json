@@ -21,10 +21,11 @@
     "@notionhq/client": "^1.0.4",
     "@oclif/core": "^1.8.1",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.1.0",
+    "@oclif/plugin-not-found": "^2.3.1",
     "got": "^11.8.3",
     "jsdom": "^19.0.0",
     "jsonld": "https://github.com/bcaldwell/jsonld.js",
+    "node-html-parser": "^5.3.3",
     "schema-dts": "^1.1.0"
   },
   "devDependencies": {
@@ -52,7 +53,7 @@
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
-      "@oclif/plugin-plugins"
+      "@oclif/plugin-not-found"
     ],
     "topicSeparator": " ",
     "topics": {
