@@ -132,10 +132,11 @@ function convertJSONLDToRecipe(url: string, jsonld: any): Recipe {
         image: getString(jsonld["image"]),
         instructions: getStringList(jsonld["instructions"]),
         keywords: keywords === "" ? [] : keywords.split(",").map((x: string) => x.trim()),
-        category: getString(jsonld["category"]),
+        category: getString(jsonld["category"]).split(",")[0].trim(),
         ingredients: getStringList(jsonld["ingredients"]),
         // ingredients: jsonld["ingredients"],
-        cuisine: getString(jsonld["cuisine"]),
+        // sometimes it has a comma for multiple which notion does not like
+        cuisine: getString(jsonld["cuisine"]).split(",")[0].trim(),
         time: getString(jsonld["time"]),
         url: url,
         description: getString(jsonld["description"]),
