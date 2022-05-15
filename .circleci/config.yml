@@ -21,9 +21,8 @@ jobs:
     steps:
       - run:
           name: Updating docker image in k8s-config
-          command: echo "yes"
-          # command: |
-          #   curl -H "Authorization: token $GITHUB_TOKEN" -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/bcaldwell/k8s-config/contents/scripts/update_docker_image.sh | bash /dev/stdin selfops/selfops ${CIRCLE_SHA1}
+          command: |
+            curl -H "Authorization: token $GITHUB_TOKEN" -H 'Accept: application/vnd.github.v3.raw' https://api.github.com/repos/bcaldwell/k8s-config/contents/scripts/update_docker_image.sh | bash /dev/stdin commonplace/notion-hooks ${CIRCLE_SHA1}
 
 workflows:
   version: 2
