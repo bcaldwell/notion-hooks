@@ -10,15 +10,21 @@ export default class KindleHighlightsSync extends Command {
 
   static flags = {
     html: Flags.string({ description: 'base64 encoded html with highlights', required: true }),
-    "notion-db": Flags.string({ description: 'notion id of the database to use', required: true}),
+    "notion-db": Flags.string({ description: 'notion id of the database to use', required: false}),
   }
 
-  static args = [{name: 'file'}]
+
 
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(KindleHighlightsSync)
 
-    await writeHighlightsFromKindleExportToNotion(base64Decode(flags.html), flags['notion-db'])
+    const notionDB = flags["notion-db"] || process.env.NOTION_DB_ID
+    if (!notionDB) {
+      console.log("notion-db flag or NOTION_DB_ID env var needs to be set")
+      return
+    }
+
+    await writeHighlightsFromKindleExportToNotion(base64Decode(flags.html), notionDB)
   }
 
 }

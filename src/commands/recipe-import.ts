@@ -10,15 +10,20 @@ export default class RecipeImport extends Command {
 
   static flags = {
     url: Flags.string({ description: 'url path to recipe', required: true }),
-    "notion-db": Flags.string({ description: 'notion id of the database to use', required: true}),
+    "notion-db": Flags.string({ description: 'notion id of the database to use', required: false}),
   }
 
-  // static args = [{name: 'file'}]
-
+  
   public async run(): Promise<void> {
     const { args, flags } = await this.parse(RecipeImport)
 
-    await writeRecipeToNotion(flags.url, flags['notion-db'])
+    const notionDB = flags["notion-db"] || process.env.NOTION_DB_ID
+      if (!notionDB) {
+        console.log("notion-db flag or NOTION_DB_ID env var needs to be set")
+        return
+      }
+
+    await writeRecipeToNotion(flags.url, notionDB)
   }
 
 }
