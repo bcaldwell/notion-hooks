@@ -42,19 +42,19 @@ async function getRecipeJSONLD(html: Document): Promise<RecipeSchema | null> {
     })
 
     const recipe = getRecipeFromGraph(compacted as Graph)
-    if (recipe === null) {
-      continue
+    if (recipe !== null) {
+      return recipe
     }
-
-    return recipe
   }
 
   const mdata = microdata("http://schema.org/Recipe", html) as any
+  mdata["@context"] = "http://schema.org"
   const compacted = await jsonld.compact(mdata, schemaDotOrgContext, {
     // always return it as a graph
     graph: true,
     base: schemaDotOrgURL,
   })
+  console.log(compacted)
 
   return getRecipeFromGraph(compacted as Graph)
 }
@@ -130,11 +130,11 @@ function getInstructions(instructions: any): Instructions[] {
   }
 
   for (const step of instructions) {
-    if (isHowToStep(step)) {
+    if (typeof step === "string") {
+      defaultInstructions.instructions.push(step)
+    } else if (isHowToStep(step)) {
       defaultInstructions.instructions.push(getString(step))
-    }
-
-    if (isHowToStepSection(step)) {
+    } else if (isHowToStepSection(step)) {
       result.push(getInstructionFromHowToSection(step))
     }
   }
