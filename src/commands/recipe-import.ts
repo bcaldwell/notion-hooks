@@ -25,6 +25,5 @@ export default class RecipeImport extends Command {
 
     await writeRecipeToNotion(flags.url, notionDB)
   }
-
 }
 

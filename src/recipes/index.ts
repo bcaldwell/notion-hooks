@@ -9,5 +9,7 @@ export async function writeRecipeToNotion(url: string, notionDBID: string) {
       return
     }
 
-    await createNotionPageForRecipe(recipe, notionDBID)
+    return
+
+    // await createNotionPageForRecipe(recipe, notionDBID)
 }
