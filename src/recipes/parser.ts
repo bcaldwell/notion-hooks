@@ -1,231 +1,256 @@
-import got from 'got';
+import got from "got"
 // import { parse, HTMLElement } from 'node-html-parser';
-import jsonld from 'jsonld';
+import jsonld from "jsonld"
 
-import { Recipe } from "./types"
+import { Instructions, Recipe } from "./types"
 import { JSDOM } from "jsdom"
-import { Recipe as RecipeSchema } from "schema-dts"
-import { microdata } from '@cucumber/microdata';
-import { url } from 'inspector';
+import { Recipe as RecipeSchema, Graph, HowToStep, HowToSection } from "schema-dts"
+import { microdata } from "@cucumber/microdata"
 
-const recipeContext = {
-    "@context": {
-        "author": {
-            "@id": "http://schema.org/author"
-        },
-        "description": "http://schema.org/description",
-        "image": "http://schema.org/image",
-        "instructions": "http://schema.org/recipeInstructions",
-        "keywords": "http://schema.org/keywords",
-        "ingredients": "http://schema.org/recipeIngredient",
-        "category": "http://schema.org/recipeCategory",
-        "cuisine": "http://schema.org/recipeCuisine",
-        "time": "http://schema.org/totalTime",
-        "url": "http://schema.org/url",
-        "name": "http://schema.org/name"
-    }
-};
+const schemaDotOrgURL = "http://schema.org"
+const schemaDotOrgContext = {
+  "@context": schemaDotOrgURL,
+}
 
 export async function parseRecipeFromURL(url: string): Promise<Recipe | null> {
-    const siteHTML = await got.get(url).text();
-    // const parsedHTML = parse(siteHTML)
-    const dom = new JSDOM(siteHTML)
+  const siteHTML = await got.get(url).text()
+  // const parsedHTML = parse(siteHTML)
+  const dom = new JSDOM(siteHTML)
 
-    // check error...
-    const recipeBlock = await getRecipeJSONLD(dom.window.document)
-    if (!recipeBlock) {
-        console.log("invalid recipe")
-        return null
-    }
-    // console.log(recipeBlock)
-    return convertJSONLDToRecipe(url, recipeBlock)
-}
-
-async function getRecipeJSONLD(html: Document): Promise<any> {
-    const jsonLDBlocks = getJSONLDBlocks(html)
-    // check length and error
-
-    // @ts-ignore: this works :P
-    const nodeDocumentLoader = jsonld.documentLoaders.node({
-        strictSSL: true, maxRedirects: 10, headers: {}
-    });
-    // or grab the XHR one: jsonld.documentLoaders.xhr()
-
-    // change the default document loader
-    const customLoader = async (url: string, options: any) => {
-        // call the default documentLoader
-        return nodeDocumentLoader(url);
-    };
-
-    // @ts-ignore: this works :P
-    jsonld.documentLoader = customLoader;
-
-    for (let block of jsonLDBlocks) {
-        const jsonData = JSON.parse(block.innerHTML)
-
-        // compact a document according to a particular context
-        // @ts-ignore: this works :P
-        const compacted = await jsonld.compact(jsonData, recipeContext, { documentLoader: customLoader }) as any;
-
-        const recipeBlock = getRecipeBlock(compacted)
-        if (recipeBlock && Object.keys(recipeBlock).length > 0) {
-            return recipeBlock
-        }
-    }
-
-    const mdata = microdata("http://schema.org/Recipe", html) as any
-    // const recipe = microdata("http://schema.org/Recipe", html) as RecipeSchema
-    // if (typeof recipe === 'string') return null
-    // if (typeof recipe === 'string') throw new Error('Expected a Recipe object')
-
-    mdata["@context"] = "http://schema.org"
-    // @ts-ignore: this works :P
-    const compacted = await jsonld.compact(mdata, recipeContext, { documentLoader: customLoader }) as any;
-
-    const recipeBlock = getRecipeBlock(compacted)
-    if (recipeBlock && Object.keys(recipeBlock).length > 0) {
-        return recipeBlock
-    }
-
+  // check error...
+  const recipeBlock = await getRecipeJSONLD(dom.window.document)
+  if (!recipeBlock) {
+    console.log("invalid recipe")
     return null
+  }
 
-    // return {
-    //     url: "",
-    //     name: recipe.name?.toString() || "",
-    //     author: recipe.author?.toString() || "",
-    //     category: recipe.recipeCategory?.toString() || "",
-    //     keywords: [],
-    //     cuisine: recipe.recipeCuisine?.toString() || "",
-    //     image: recipe.image?.toString() || "",
-    //     instructions: [recipe.recipeInstructions?.toString()|| ""],
-    //     ingredients: [recipe.recipeIngredient?.toString() || ""],
-    //     time: recipe.totalTime?.toString() || "",
-    // }
+  return convertJSONLDToRecipe(url, recipeBlock)
 }
+
+async function getRecipeJSONLD(html: Document): Promise<RecipeSchema | null> {
+  const jsonLDBlocks = getJSONLDBlocks(html)
+  // check length and error
+
+  for (const block of jsonLDBlocks) {
+    const jsonData = JSON.parse(block.innerHTML)
+
+    // eslint-disable-next-line no-await-in-loop
+    const compacted = await jsonld.compact(jsonData, schemaDotOrgContext, {
+      // always return it as a graph
+      graph: true,
+      base: schemaDotOrgURL,
+    })
+
+    const recipe = getRecipeFromGraph(compacted as Graph)
+    if (recipe === null) {
+      continue
+    }
+
+    return recipe
+  }
+
+  const mdata = microdata("http://schema.org/Recipe", html) as any
+  const compacted = await jsonld.compact(mdata, schemaDotOrgContext, {
+    // always return it as a graph
+    graph: true,
+    base: schemaDotOrgURL,
+  })
+
+  return getRecipeFromGraph(compacted as Graph)
+}
+
 function getJSONLDBlocks(html: Document) {
-    return Array.from(html.getElementsByTagName("script")).
-        filter(elm => elm.attributes.getNamedItem("type")?.value === "application/ld+json")
+  return [...html.querySelectorAll("script")].filter(elm => elm.attributes.getNamedItem("type")?.value === "application/ld+json")
 }
 
-function getRecipeBlock(jsonld: any): any {
-    const recipeType = "http://schema.org/Recipe"
-    if (jsonld["@type"] === recipeType) {
-        return jsonld
+function getRecipeFromGraph(graph: Graph): (RecipeSchema | null) {
+  for (const el of graph["@graph"]) {
+    if (isRecipe(el)) {
+      return el
     }
+  }
 
-    if ("@graph" in jsonld) {
-        const recipeElements = jsonld["@graph"].filter((x: any) => x["@type"] === recipeType)
-        if (recipeElements.length) {
-            return recipeElements[0]
-        }
-    }
-
-    return {}
+  return null
 }
 
-function convertJSONLDToRecipe(url: string, jsonld: any): Recipe {
-    const keywords = getString(jsonld["keywords"])
+function isRecipe(el: any): el is RecipeSchema {
+  const t = el["@type"] || el.type
+  return t === "Recipe"
+}
 
-    return {
-        name: getString(jsonld["name"]),
-        author: getString(jsonld["author"]["name"]),
-        image: getString(jsonld["image"]),
-        instructions: getStringList(jsonld["instructions"]),
-        keywords: keywords === "" ? [] : keywords.split(",").map((x: string) => x.trim()),
-        category: getString(jsonld["category"]).split(",")[0].trim(),
-        ingredients: getStringList(jsonld["ingredients"]),
-        // ingredients: jsonld["ingredients"],
-        // sometimes it has a comma for multiple which notion does not like
-        cuisine: getString(jsonld["cuisine"]).split(",")[0].trim(),
-        time: getString(jsonld["time"]),
-        url: url,
-        description: getString(jsonld["description"]),
+function convertJSONLDToRecipe(url: string, jsonld: RecipeSchema): Recipe {
+  const keywords = getString(jsonld.keywords)
+
+  return {
+    name: getString(jsonld.name),
+    author: getAuthor(jsonld.author?.valueOf()),
+    image: getString(jsonld.image),
+    instructions: getInstructions(jsonld.recipeInstructions),
+    keywords: keywords === "" ? [] : keywords.split(",").map((x: string) => x.trim()),
+    category: getString(jsonld.recipeCategory).split(",")[0].trim(),
+    ingredients: getStringList(jsonld.recipeIngredient),
+    // sometimes it has a comma for multiple which notion does not like
+    cuisine: getString(jsonld.recipeCuisine).split(",")[0].trim(),
+    time: getString(jsonld.totalTime),
+    url: url,
+    description: getString(jsonld.description),
+  }
+}
+
+function getAuthor(author: any): string {
+  if (!author) {
+    return ""
+  }
+
+  if (typeof author === "string") {
+    return author
+  }
+
+  // probably should make this smarter
+  return (author as any).name
+}
+
+function getInstructions(instructions: any): Instructions[] {
+  const t = typeof instructions
+  const isArray = (t === "object" && instructions.constructor === Array)
+
+  if (!isArray) {
+    return []
+  }
+
+  if (instructions.length === 0) {
+    return []
+  }
+
+  let result: Instructions[] = []
+  const defaultInstructions: Instructions = {
+    title: "",
+    isMain: true,
+    instructions: [],
+  }
+
+  for (const step of instructions) {
+    if (isHowToStep(step)) {
+      defaultInstructions.instructions.push(getString(step))
     }
+
+    if (isHowToStepSection(step)) {
+      result.push(getInstructionFromHowToSection(step))
+    }
+  }
+
+  if (defaultInstructions.instructions.length > 0) {
+    result = [defaultInstructions, ...result]
+  }
+
+  return result
+}
+
+function getStepsFromHowToSteps(steps: any): string[] {
+  if (isArray<any>(steps)) {
+    return steps.map(step => getString(step))
+  }
+
+  return []
+}
+
+function getInstructionFromHowToSection(section: HowToSection): Instructions {
+  return {
+    title: getString(section.name || section.text),
+    instructions: getStepsFromHowToSteps(section.itemListElement || []),
+    isMain: false,
+  }
+}
+
+function isHowToStep(el: any): el is HowToStep {
+  const t = el["@type"] || el.type
+  return t === "HowToStep"
+}
+
+function isHowToStepSection(el: any): el is HowToSection {
+  const t = el["@type"] || el.type
+  return t === "HowToSection"
 }
 
 function getString(item: any): string {
-    // if (!(key in jsonld)) {
-    //     return ""
-    // }
+  // if (!(key in jsonld)) {
+  //     return ""
+  // }
 
-    // const item: any = jsonld[key]
+  // const item: any = jsonld[key]
 
-    const t = typeof item
-    if (t === "string") {
-        return item.trim()
+  const t = typeof item
+  if (t === "string") {
+    return item.trim()
+  }
+
+  if (t === "object" && item.constructor === Array) {
+    if (item.length === 0) {
+      return ""
     }
 
-    if (t === "object" && item.constructor === Array) {
-        if (item.length === 0) {
-            return ""
-        }
+    return getString(item[0])
+  }
 
-        return getString(item[0])
-    }
+  if (t === "object") {
+    return getStringFromObj(item)
+  }
 
-    if (t === "object") {
-        return getStringFromObj(item)
-    }
-
-
-    return ""
+  return ""
 }
 
 function getStringFromObj(jsonld: any): string {
-    const t = jsonld["@type"]
-    if (!t) {
-        return jsonld["@id"];
-    }
+  const t = jsonld["@type"] || jsonld.type
+  if (!t) {
+    return jsonld["@id"]
+  }
 
-    if (t === "http://schema.org/ImageObject") {
-        return getString(jsonld["url"])
-    }
+  if (t === "ImageObject") {
+    return getString(jsonld.url)
+  }
 
-    if (t === "http://schema.org/HowToStep") {
-        return getString(jsonld["http://schema.org/text"])
-    }
+  if (t === "HowToStep") {
+    return getString(jsonld.text)
+  }
 
-    return ""
+  return ""
 }
 
 function getStringList(item: any): string[] {
-    // if (!(key in jsonld)) {
-    //     return []
-    // }
+  // if (!(key in jsonld)) {
+  //     return []
+  // }
 
-    // const item: any = jsonld[key]
+  // const item: any = jsonld[key]
 
-    const t = typeof item
+  const t = typeof item
 
-    if (t === "string") {
-        return [item.trim()]
-    }
+  if (t === "string") {
+    return [item.trim()]
+  }
 
-    if (t === "object" && item.constructor === Array) {
-        const items = item.map((x: any) => getStringList(x))
-        return ([] as string[]).concat(...items)
-    }
+  if (t === "object" && item.constructor === Array) {
+    const items = item.map((x: any) => getStringList(x))
+    // eslint-disable-next-line unicorn/prefer-spread
+    return ([] as string[]).concat(...items)
+  }
 
-    if (t === "object") {
-        return getStringListFromObj(item)
-    }
+  if (t === "object") {
+    return getStringListFromObj(item)
+  }
 
-
-    return []
+  return []
 }
 
-
-
 function getStringListFromObj(jsonld: any): string[] {
-    const t = jsonld["@type"]
-    if (!t) {
-        return [];
-    }
+  const t = jsonld["@type"]
+  if (!t) {
+    return []
+  }
 
-    if (t === "http://schema.org/HowToSection") {
-        return getStringList(jsonld["http://schema.org/itemListElement"])
-    }
+  return [getStringFromObj(jsonld)]
+}
 
-
-    return [getStringFromObj(jsonld)]
+function isArray<T>(t: any): t is Array<T> {
+  return (typeof t === "object" && t.constructor === Array)
 }

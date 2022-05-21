@@ -1,22 +1,20 @@
-import {Command, Flags} from '@oclif/core'
-import {writeHighlightsFromKindleExportToNotion} from "../kindle"
+import { Command, Flags } from "@oclif/core"
+import { writeHighlightsFromKindleExportToNotion } from "../kindle"
 
 export default class KindleHighlightsSync extends Command {
-  static description = 'Syncs highlights from kindle html export'
+  static description = "Syncs highlights from kindle html export"
 
   static examples = [
-    '<%= config.bin %> <%= command.id %>',
+    "<%= config.bin %> <%= command.id %>",
   ]
 
   static flags = {
-    html: Flags.string({ description: 'base64 encoded html with highlights', required: true }),
-    "notion-db": Flags.string({ description: 'notion id of the database to use', required: false}),
+    html: Flags.string({ description: "base64 encoded html with highlights", required: true }),
+    "notion-db": Flags.string({ description: "notion id of the database to use", required: false }),
   }
 
-
-
   public async run(): Promise<void> {
-    const {args, flags} = await this.parse(KindleHighlightsSync)
+    const { flags } = await this.parse(KindleHighlightsSync)
 
     const notionDB = flags["notion-db"] || process.env.NOTION_DB_ID
     if (!notionDB) {
@@ -26,11 +24,10 @@ export default class KindleHighlightsSync extends Command {
 
     await writeHighlightsFromKindleExportToNotion(base64Decode(flags.html), notionDB)
   }
-
 }
 
 function base64Decode(s: string): string {
-  let b = Buffer.from(s, 'base64');
+  const b = Buffer.from(s, "base64")
 
-  return b.toString('ascii')
+  return b.toString("ascii")
 }

@@ -2,7 +2,7 @@ export interface Recipe {
     name: string;
     author: string;
     image: string;
-    instructions: string[];
+    instructions: Instructions[];
     keywords: string[];
     ingredients: string[];
     category: string;
@@ -10,4 +10,10 @@ export interface Recipe {
     time: string;
     url: string;
     description?: string;
+}
+
+export interface Instructions {
+    title: string
+    instructions: string[]
+    isMain: boolean
 }
