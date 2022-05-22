@@ -63,9 +63,9 @@ export function parseHighlightsFromKindleExport(kindleExportContents: string): B
 }
 
 function getTextContent(elm: HTMLElement): string {
-  return (getTextContent(elm) || "")
+  return (elm.textContent || "")
 }
 
 function getTrimmedContent(elm: HTMLElement): string {
-  return getTrimmedContent(elm)
+  return getTextContent(elm).trim()
 }

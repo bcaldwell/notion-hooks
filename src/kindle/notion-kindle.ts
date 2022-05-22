@@ -12,7 +12,13 @@ export async function writeHighlightsToNotion(bookHighlights: BookHighlights, no
   const pageTitle = bookHighlights.book + " - Highlights"
   const databasePageID = await client.getOrCreateDatabasePage(Notion.filterOnTitleProperty(bookHighlights.book), defaultBookPage(bookHighlights))
 
-  const highlightPageID = await client.getOrCreateChildPage(databasePageID, pageTitle)
+  // because I am lazy, delete and recreate the page if it exists
+  const existingHighlightPageID = await client.getChildPageID(databasePageID, pageTitle)
+  if (existingHighlightPageID !== null) {
+    await client.deleteBlock(existingHighlightPageID)
+  }
+
+  const highlightPageID = await client.createChildPage(databasePageID, pageTitle)
 
   let children: BlockObjectRequest[] = [
     authorBlock(bookHighlights.author),

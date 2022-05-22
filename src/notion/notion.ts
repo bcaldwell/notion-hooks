@@ -59,7 +59,7 @@ export class Notion {
     return createResponse.id
   }
 
-  async getOrCreateChildPage(pageID: string, name: string): Promise<string> {
+  async getChildPageID(pageID: string, name: string): Promise<string | null> {
     let hasMore = true
 
     while (hasMore) {
@@ -78,6 +78,10 @@ export class Notion {
       }
     }
 
+    return null
+  }
+
+  async createChildPage(pageID: string, name: string): Promise<string> {
     const response = await this.notion.pages.create({
       parent: {
         page_id: pageID,
@@ -95,6 +99,21 @@ export class Notion {
     })
 
     return response.id
+  }
+
+  async getOrCreateChildPage(pageID: string, name: string): Promise<string> {
+    const childPage = await this.getChildPageID(pageID, name)
+    if (childPage !== null) {
+      return childPage
+    }
+
+    return this.createChildPage(pageID, name)
+  }
+
+  async deleteBlock(blockID: string) {
+    await this.notion.blocks.delete({
+      block_id: blockID,
+    })
   }
 
   static heading2Block(name: string): BlockObjectRequest {
