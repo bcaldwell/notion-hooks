@@ -201,10 +201,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@cucumber/microdata@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@cucumber/microdata/-/microdata-2.0.1.tgz#fbd131415b7e154047ece249b112baeb4dac4c8c"
-  integrity sha512-FIiOgq2zk0bVQUGmCnaxBEgkMa4LvKMWm65J6iyppUThCTFfOFrfSqZ0eOlc/APDk32njySHPJTQJ5NCtthT8g==
+"@cucumber/microdata@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cucumber/microdata/-/microdata-2.1.0.tgz#4bd0923629d95b2e1fb6119e5d75f56e7b2ea784"
+  integrity sha512-Ut3TNZ9hmrkjPnUB0QyJqJeK2vnIajwbZ2sHRXwzBpRuKTmx0J4wSHGZxeLopNQJ9sYSGlGwXZrvIxp45LI1mg==
 
 "@digitalbazaar/http-client@^1.1.0":
   version "1.2.0"
