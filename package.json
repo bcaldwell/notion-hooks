@@ -19,7 +19,7 @@
   "dependencies": {
     "@cucumber/microdata": "^2.0.1",
     "@notionhq/client": "^1.0.4",
-    "@oclif/core": "^1.9.5",
+    "@oclif/core": "^1.13.0",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-not-found": "^2.3.1",
     "got": "^11.8.5",
