@@ -33,7 +33,7 @@
     "@types/chai": "^4.3.1",
     "@types/jsdom": "^16.2.14",
     "@types/jsonld": "^1.5.6",
-    "@types/mocha": "^9.1.1",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^17.0.45",
     "@typescript-eslint/eslint-plugin": "^5.30.3",
     "@typescript-eslint/parser": "^5.30.5",
