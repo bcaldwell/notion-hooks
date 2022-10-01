@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: node:16
+      - image: node:18
     steps:
       - checkout
       # look for existing cache and restore if found
