@@ -29,7 +29,7 @@
     "schema-dts": "^1.1.0"
   },
   "devDependencies": {
-    "@oclif/test": "^2.1.0",
+    "@oclif/test": "^2.2.8",
     "@types/chai": "^4.3.1",
     "@types/jsdom": "^16.2.14",
     "@types/jsonld": "^1.5.6",
