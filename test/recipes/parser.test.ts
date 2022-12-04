@@ -24,6 +24,7 @@ describe("Recipe Parser", () => {
         ],
         keywords: [
           "asparagus",
+          "brown butter",
           "peas",
           "salmon",
           "spring",
