@@ -14,10 +14,11 @@ RUN yarn install --production --network-timeout 1000000000 --modules-folder node
 COPY --chown=node:node . .
 
 RUN yarn run build
+RUN ls && pwd
 
 
 # STAGE 2
-FROM node:16-alpine
+FROM node:18-alpine
 # symlink resulting run script to bin folder
 RUN ln -s /home/node/app/bin/run /usr/local/bin/notion-hooks
 
