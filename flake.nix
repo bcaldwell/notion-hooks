@@ -20,7 +20,7 @@
     in {
       devShell = pkgs.mkShell {
         packages = [ 
-          pkgs.nodejs-16_x 
+          pkgs.nodejs-18_x 
           pkgs.yarn
           # notion-hooks
         ];
