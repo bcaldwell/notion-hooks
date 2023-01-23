@@ -235,7 +235,7 @@ async function getBookISBN(bookHighlights: BookHighlights): Promise<string | nul
 
     if (response.numFound > 0) {
       for (const book of response.docs) {
-        if (book.author_name.includes(bookHighlights.author)) {
+        if (book.author_name && book.author_name.includes(bookHighlights.author)) {
           return book.isbn[0]
         }
       }
