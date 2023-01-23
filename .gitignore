@@ -10,3 +10,4 @@ oclif.manifest.json
 result
 .env.ejson
 .direnv
+tsconfig.tsbuildinfo
