@@ -539,10 +539,10 @@
     widest-line "^3.1.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^2.0.2-beta.10", "@oclif/core@^2.0.2-beta.6":
-  version "2.0.2-beta.10"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-2.0.2-beta.10.tgz#5b459a91d653b8d5aa234e4324a4cc483747abd2"
-  integrity sha512-FgJ5XHE6MjE7DOyQAcOZPD5Xs5cNOzP91zAQBkut8xhOkZA1NRQjv+7BczJqOTerXccohhTlu09pd7OAyDuitw==
+"@oclif/core@^2.0.2-beta.10", "@oclif/core@^2.0.2-beta.6", "@oclif/core@^2.0.3":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-2.0.8.tgz#81c79f051ffb326b7c9999463ae9547a7e799316"
+  integrity sha512-jt06vEZfpazkR0C8vYuVMKmsxjky52y1B1oFGPnCa6/17qH+PByd5knQP6/QbRoE5OT9RAf4zzpxx2wcihVslw==
   dependencies:
     "@types/cli-progress" "^3.11.0"
     ansi-escapes "^4.3.2"
@@ -585,13 +585,13 @@
   dependencies:
     "@oclif/core" "^2.0.2-beta.6"
 
-"@oclif/plugin-not-found@^2.3.1", "@oclif/plugin-not-found@^2.3.7":
-  version "2.3.16"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-2.3.16.tgz#3505cc1c34413d50750b05bd889e93d35f50bde9"
-  integrity sha512-MKKRVMoSHbcw9WPDQ47XIsQKRzPklrMRt6uTEVwOFSHXtQ7uopCyf52riMxy0pI7Jq9zma3XuyB56JxmRhYCEw==
+"@oclif/plugin-not-found@^2.3.17", "@oclif/plugin-not-found@^2.3.7":
+  version "2.3.17"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-2.3.17.tgz#c27fd323591d559110ef022a34074bf9732eb41c"
+  integrity sha512-KTh4vQ3GIiHNeuqsMV58cdvRBO1IREoEGuAE+e73OcP5VEjjsbJNQS+IXg0UHivMQhVBl7FeadgvAqGzUHPv5w==
   dependencies:
     "@oclif/color" "^1.0.3"
-    "@oclif/core" "^1.25.0"
+    "@oclif/core" "^2.0.3"
     fast-levenshtein "^3.0.0"
     lodash "^4.17.21"
 
