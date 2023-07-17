@@ -37,8 +37,7 @@ export async function writeHighlightsToNotion(bookHighlights: BookHighlights, no
   }
 
   let children_per_request = 50
-  for (let i = 0; i < children.length; i += children_per_request) {
-    let start = children_per_request * i
+  for (let start = 0; start < children.length; start += children_per_request) {
     await client.notion.blocks.children.append({
       block_id: highlightPageID,
       children: children.slice(start, Math.min(start + children_per_request, children.length)),
