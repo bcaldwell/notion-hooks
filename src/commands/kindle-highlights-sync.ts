@@ -29,5 +29,5 @@ export default class KindleHighlightsSync extends Command {
 function base64Decode(s: string): string {
   const b = Buffer.from(s, "base64")
 
-  return b.toString("ascii")
+  return b.toString("utf8")
 }

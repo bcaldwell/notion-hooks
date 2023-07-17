@@ -49,6 +49,7 @@ export function parseHighlightsFromKindleExport(kindleExportContents: string): B
         bookHighlights.highlights.push({
           chapter: section,
           location: location,
+          // clean non ascii unicode crap
           highlight: getTrimmedContent(elm).replace(/\n\s*/g, " "),
         })
       } else if (noteType === "Note") {

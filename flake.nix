@@ -4,7 +4,7 @@
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system: 
+    flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
 
@@ -19,9 +19,10 @@
       #   };
     in {
       devShell = pkgs.mkShell {
-        packages = [ 
-          pkgs.nodejs-18_x 
+        packages = [
+          pkgs.nodejs-18_x
           pkgs.yarn
+          pkgs.nodePackages.typescript-language-server
           # notion-hooks
         ];
       };
