@@ -668,6 +668,37 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
+"@oclif/core@^3.0.5":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.0.6.tgz#077e09d1470f14fba1c5666e77476660bdb4b601"
+  integrity sha512-tBe72CDHkst4bpbL1wVspleFnIkwNYgNeXI5dWyWP+Z0Rk4HUe3AdZzqndbm8a9n1OG5l4SOm0O4Qmp60gmsQQ==
+  dependencies:
+    ansi-escapes "^4.3.2"
+    ansi-styles "^4.3.0"
+    cardinal "^2.1.1"
+    chalk "^4.1.2"
+    clean-stack "^3.0.1"
+    cli-progress "^3.12.0"
+    debug "^4.3.4"
+    ejs "^3.1.8"
+    get-package-type "^0.1.0"
+    globby "^11.1.0"
+    hyperlinker "^1.0.0"
+    indent-string "^4.0.0"
+    is-wsl "^2.2.0"
+    js-yaml "^3.14.1"
+    natural-orderby "^2.0.3"
+    object-treeify "^1.1.33"
+    password-prompt "^1.1.2"
+    slice-ansi "^4.0.0"
+    string-width "^4.2.3"
+    strip-ansi "^6.0.1"
+    supports-color "^8.1.1"
+    supports-hyperlinks "^2.2.0"
+    widest-line "^3.1.0"
+    wordwrap "^1.0.0"
+    wrap-ansi "^7.0.0"
+
 "@oclif/linewrap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@oclif/linewrap/-/linewrap-1.0.0.tgz#aedcb64b479d4db7be24196384897b5000901d91"
@@ -680,13 +711,22 @@
   dependencies:
     "@oclif/core" "^2.9.3"
 
-"@oclif/plugin-not-found@^2.3.1", "@oclif/plugin-not-found@^2.3.7":
+"@oclif/plugin-not-found@^2.3.7":
   version "2.3.31"
   resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-2.3.31.tgz#6ff319d07e46b8e1fa021431fdcda917c1355430"
   integrity sha512-KHBCDJbDrkFc5vuPxg4JZ3wBTrdPPHOQOWp4bLCV4cnVSUHBKnfCqnCg2aXmRb97nbzY3P13/i8Th3KQjArqmg==
   dependencies:
     "@oclif/color" "^1.0.8"
     "@oclif/core" "^2.9.3"
+    fast-levenshtein "^3.0.0"
+
+"@oclif/plugin-not-found@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-not-found/-/plugin-not-found-3.0.1.tgz#038f0d01681d9421daf632d533b1a9e666dd78f5"
+  integrity sha512-5tbLvxwb7bNkQn5M9F4nE43QttlrL/oHm6SeTqstvstyquJs3u251Iy2uGPP1tF7lZAvD/VMrsZ3tznTe4SoJg==
+  dependencies:
+    "@oclif/core" "^3.0.5"
+    chalk "^5.3.0"
     fast-levenshtein "^3.0.0"
 
 "@oclif/plugin-warn-if-update-available@^2.0.14":
@@ -1738,6 +1778,11 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
+
+chalk@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.3.0.tgz#67c20a7ebef70e7f3970a01f90fa210cb6860385"
+  integrity sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==
 
 chardet@^0.7.0:
   version "0.7.0"
