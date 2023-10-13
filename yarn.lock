@@ -668,17 +668,55 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
+"@oclif/core@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.0.9.tgz#655fcb2bf675b4ef0f673f2c4b39962b2c71cba8"
+  integrity sha512-rwM6MWQ47W8U0++aG+qK6aATDqBl5sn5nkUqR6YmnJ4clR455gMyjUnzEqhwlzw+YfDf2MBhxC8wDlhPTImfvQ==
+  dependencies:
+    ansi-escapes "^4.3.2"
+    ansi-styles "^4.3.0"
+    cardinal "^2.1.1"
+    chalk "^4.1.2"
+    clean-stack "^3.0.1"
+    cli-progress "^3.12.0"
+    debug "^4.3.4"
+    ejs "^3.1.8"
+    get-package-type "^0.1.0"
+    globby "^11.1.0"
+    hyperlinker "^1.0.0"
+    indent-string "^4.0.0"
+    is-wsl "^2.2.0"
+    js-yaml "^3.14.1"
+    natural-orderby "^2.0.3"
+    object-treeify "^1.1.33"
+    password-prompt "^1.1.2"
+    slice-ansi "^4.0.0"
+    string-width "^4.2.3"
+    strip-ansi "^6.0.1"
+    supports-color "^8.1.1"
+    supports-hyperlinks "^2.2.0"
+    widest-line "^3.1.0"
+    wordwrap "^1.0.0"
+    wrap-ansi "^7.0.0"
+
 "@oclif/linewrap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@oclif/linewrap/-/linewrap-1.0.0.tgz#aedcb64b479d4db7be24196384897b5000901d91"
   integrity sha512-Ups2dShK52xXa8w6iBWLgcjPJWjais6KPJQq3gQ/88AY6BXoTX+MIGFPrWQO1KLMiQfoTpcLnUwloN4brrVUHw==
 
-"@oclif/plugin-help@^5", "@oclif/plugin-help@^5.1.19":
+"@oclif/plugin-help@^5.1.19":
   version "5.2.13"
   resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-5.2.13.tgz#101cafdc8a260dcd2f276acef2dcbd224a7fac44"
   integrity sha512-8+uJ9fxZhb76T+NiHDyLQWmHVhu1ONj+e47w3bMLe3+absfuGsWYZm5+W8ApJxQKoLgB5pW810idO0f7iP/4tw==
   dependencies:
     "@oclif/core" "^2.9.3"
+
+"@oclif/plugin-help@^6.0.0":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-6.0.2.tgz#f9cf0ac668e5ffabdebec33d374350495e981830"
+  integrity sha512-rHe19ySqU+sIA1qJYQrnB8Jh+LvdMxIN2cIQPSsMobhdOThW5R7jRpMDe9iZwO+okQmvXiP/gIx/vEnWST33HQ==
+  dependencies:
+    "@oclif/core" "^3.0.9"
 
 "@oclif/plugin-not-found@^2.3.1", "@oclif/plugin-not-found@^2.3.7":
   version "2.3.31"
