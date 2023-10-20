@@ -1,5 +1,5 @@
 # STAGE 1
-FROM node:18-alpine as builder
+FROM node:21-alpine as builder
 
 RUN apk add git
 WORKDIR /home/node/app
@@ -18,7 +18,7 @@ RUN ls && pwd
 
 
 # STAGE 2
-FROM node:18-alpine
+FROM node:21-alpine
 # symlink resulting run script to bin folder
 RUN ln -s /home/node/app/bin/run /usr/local/bin/notion-hooks
 
