@@ -35,7 +35,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/base:2022.12
+      - image: cimg/base:2024.01
     steps:
       - run:
           name: Updating docker image in k8s-config
