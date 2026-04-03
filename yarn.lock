@@ -217,9 +217,9 @@
     "@jridgewell/trace-mapping" "0.3.9"
 
 "@cucumber/microdata@^2.0.1":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@cucumber/microdata/-/microdata-2.1.0.tgz#4bd0923629d95b2e1fb6119e5d75f56e7b2ea784"
-  integrity sha512-Ut3TNZ9hmrkjPnUB0QyJqJeK2vnIajwbZ2sHRXwzBpRuKTmx0J4wSHGZxeLopNQJ9sYSGlGwXZrvIxp45LI1mg==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@cucumber/microdata/-/microdata-2.2.0.tgz#d4beecfa4dc3ce8f7554873b76c3671b94778aca"
+  integrity sha512-PdZhfmHEXp6XPU9r6tTfDQO/PO/iJ0HJfjwA30GtBjL2tjCCBNjgpXp/re9TcrZmvsSLzeUoSaG2lWlNSs1cdQ==
 
 "@digitalbazaar/http-client@^1.1.0":
   version "1.2.0"
